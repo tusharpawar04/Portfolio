@@ -1,7 +1,12 @@
 {
-  "description": "An editorial portfolio showcasing independent developer Tushar Pawar’s projects, skills, and approach, helping clients and collaborators explore his work and connect.",
+  "title": "Tushar Pawar",
+  "description": "Tushar Pawar - Full-stack developer building thoughtful digital products. AI-powered experiences, MERN applications, and innovative solutions.",
+  "language": "en",
   "robots": {
-    "index": false
+    "index": true
+  },
+  "icons": {
+    "icon": "/favicon.png"
   },
   "accessibility": {
     "addBypassLinks": false,
