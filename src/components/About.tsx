@@ -48,6 +48,10 @@ export default function AboutPage() {
                   src="/TusharNavy.png" 
                   alt="Tushar Pawar" 
                   className="w-full h-full object-cover"
+                  onError={(e) => {
+                    console.error('Image failed to load:', e);
+                    (e.target as HTMLImageElement).style.display = 'none';
+                  }}
                 />
               </div>
               {/* Floating Supercat on the photo corner */}
@@ -78,6 +82,14 @@ export default function AboutPage() {
                   href={s.url}
                   target={s.platform === 'Email' ? undefined : '_blank'}
                   rel={s.platform === 'Email' ? undefined : 'noopener noreferrer'}
+                  onClick={
+                    s.platform === 'Email'
+                      ? (e) => {
+                          e.preventDefault()
+                          window.location.href = s.url
+                        }
+                      : undefined
+                  }
                   aria-label={s.platform}
                   className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full border border-rule bg-white text-sm font-mono hover-lift min-h-[44px]"
                 >
