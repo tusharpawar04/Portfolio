@@ -64,14 +64,17 @@ function WorkCard({ p, index }: { p: Project; index: number }) {
               <img
                 src={p.images[0].url}
                 alt={p.title}
-                loading="lazy"
+                loading="eager"
                 className="w-full h-full object-cover object-top"
                 onError={(e) => {
-                  console.error(`Failed to load image for ${p.title}:`, p.images?.[0]?.url);
-                  (e.target as HTMLImageElement).style.display = 'none';
+                  console.error(`❌ Failed to load image for ${p.slug}:`, {
+                    url: p.images?.[0]?.url,
+                    hasImages: !!p.images,
+                    imagesLength: p.images?.length
+                  });
                 }}
                 onLoad={() => {
-                  console.log(`Successfully loaded image for ${p.title}:`, p.images?.[0]?.url);
+                  console.log(`✅ Successfully loaded image for ${p.slug}`);
                 }}
               />
             ) : V ? (
