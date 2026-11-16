@@ -403,6 +403,26 @@ export const projects: Project[] = [
       { label: 'Auth Methods', value: 'JWT + Google OAuth' },
       { label: 'Booking Engine', value: 'State Machine' },
     ],
+    images: [
+      {
+        url: '/projects/tourmitra-hero.png',
+        title: 'Hero Landing - Discover India Through Local Eyes',
+        caption: 'Beautiful gradient hero section showcasing the platform\'s value proposition: connecting travelers with 5,000+ verified local guides across 200+ destinations with AI-powered trip planning.',
+        aspect: 'Hero & Branding',
+      },
+      {
+        url: '/projects/tourmitra-explore.png',
+        title: 'Destination Explorer & Guide Marketplace',
+        caption: 'Interactive destination discovery interface featuring iconic locations like Jaipur\'s Amber Fort and Agra\'s Taj Mahal, with filtering by heritage, adventure, culture, and nature categories.',
+        aspect: 'Explore & Discovery',
+      },
+      {
+        url: '/projects/tourmitra-ai-planner.png',
+        title: 'AI-Powered Trip Planner Interface',
+        caption: 'Multi-step AI itinerary generator guiding users through destination selection, dates, travelers, budget, pace, and vibes to create personalized day-by-day travel schedules.',
+        aspect: 'AI Planning',
+      },
+    ],
     codebase: {
       summary: 'Production MERN codebase with clean architectural separation, dual-role access control, centralized Axios service layer, and responsive Glassmorphism design system.',
       architecture: 'Client-server architecture featuring a React SPA fronted by Vite and backed by an Express REST API. The frontend communicates through an abstracted API service layer with bearer token interceptors. The backend orchestrates role-based middleware, Mongoose data models, and automated booking pricing logic.',
@@ -535,6 +555,26 @@ export const projects: Project[] = [
       { label: 'Media Storage', value: 'Cloudinary CDN' },
       { label: 'Geolocation', value: 'Mapbox SDK' },
       { label: 'Session Store', value: 'Connect-Mongo' },
+    ],
+    images: [
+      {
+        url: '/projects/voyager-listings.png',
+        title: 'Property Listing Catalog & Discovery',
+        caption: 'Responsive grid showcase of accommodation listings featuring diverse properties from "Enjoy the Nainital" studio apartments to modern private studios and boutique cafes across India.',
+        aspect: 'Browse & Discovery',
+      },
+      {
+        url: '/projects/voyager-detail.png',
+        title: 'Property Detail View & Booking Information',
+        caption: 'Comprehensive listing detail page for "Enjoy the Nainital" featuring high-res property gallery, owner attribution, full amenity descriptions, pricing (₹4,500/night), and location details.',
+        aspect: 'Listing Detail',
+      },
+      {
+        url: '/projects/voyager-create.png',
+        title: 'Host Property Creation Interface',
+        caption: 'Intuitive property submission form for hosts to create new listings with title, description, pricing, Cloudinary image upload, and Mapbox geocoded location fields.',
+        aspect: 'Host Dashboard',
+      },
     ],
     codebase: {
       summary: 'Classical MVC web architecture using Express.js and EJS templating, with Cloudinary image streaming, Mapbox forward geocoding, and Passport.js session management.',
