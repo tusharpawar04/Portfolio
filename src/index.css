@@ -1,0 +1,254 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --font-serif: 'Instrument Serif', Georgia, serif;
+  --font-sans: 'Geist', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, monospace;
+  --color-cloud: #faf7f2;
+  --color-ink: #191d27;
+  --color-cobalt: #7c3aed;
+  --color-apricot: #f2a17d;
+  --color-mute: #8b8680;
+  --color-rule: #e8e4de;
+  --color-wash: #f3efe8;
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--color-cloud);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--color-cobalt); color: #fff; }
+  :focus-visible { outline: 2px solid var(--color-cobalt); outline-offset: 3px; border-radius: 4px; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+}
+
+@layer components {
+  /* ── Typography ── */
+  .meta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.8;
+  }
+
+  /* ── Links ── */
+  .u-link {
+    background: linear-gradient(currentColor, currentColor) no-repeat 0 100% / 100% 1px;
+    padding-bottom: 3px;
+    transition: color 200ms;
+  }
+  .u-link:hover { color: var(--color-cobalt); }
+
+  .nav-link {
+    background: linear-gradient(var(--color-cobalt), var(--color-cobalt)) no-repeat 0 100% / 0 1px;
+    padding-bottom: 3px;
+    transition: background-size 250ms ease-out, color 200ms;
+  }
+  .nav-link:hover { background-size: 100% 1px; color: var(--color-cobalt); }
+
+  /* ── Nav pills ── */
+  .nav-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1.25rem;
+    border-radius: 20px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.8;
+    border: 1px solid transparent;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+    background: transparent;
+  }
+  .nav-pill:hover {
+    transform: scale(1.05);
+    color: var(--color-cobalt);
+    background: rgba(124, 58, 237, 0.06);
+    border-color: rgba(124, 58, 237, 0.15);
+  }
+  .nav-pill:active { transform: scale(0.98); }
+
+  /* ── Reveal animations ── */
+  .rise { animation: rise 450ms cubic-bezier(.4,.8,.4,1) both; }
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity 400ms ease-out, transform 400ms cubic-bezier(.4,.8,.4,1); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  .fade-slide-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .fade-slide-up.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── Hover effects ── */
+  .hover-lift {
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .hover-lift:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  .hover-scale {
+    transition: transform 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  .hover-scale:hover { transform: scale(1.05); }
+
+  /* ── Skill cards ── */
+  .skill-card {
+    min-width: 80px;
+    min-height: 80px;
+    border-radius: 16px;
+    border: 1px solid var(--color-rule);
+    background: #fff;
+    transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    cursor: default;
+  }
+  .skill-card:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 8px 24px rgba(124, 58, 237, 0.12);
+    border-color: var(--color-cobalt);
+  }
+
+  /* ── Achievement cards ── */
+  .achievement-card {
+    border-radius: 20px;
+    padding: 1.5rem;
+    background: #fff;
+    border: 1px solid var(--color-rule);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .achievement-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+  }
+
+  /* ── Footer links ── */
+  .footer-link {
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .footer-link:hover {
+    transform: translateY(-4px) scale(1.05);
+  }
+
+  /* ── Supercat animations ── */
+  .cat-blink { transform-box: fill-box; transform-origin: center; animation: blink 8s infinite; }
+  .cat-tail { transform-box: view-box; transform-origin: var(--tail-o, 134px 170px); animation: tail 3.4s ease-in-out infinite; }
+  .cat-cape { transform-box: view-box; transform-origin: 100px 106px; animation: cape 4.2s ease-in-out infinite; }
+  .cat-hop { animation: hop 520ms cubic-bezier(.4,.8,.4,1.2); }
+  .cat-wink .wink-eye { transform-box: fill-box; transform-origin: center; animation: wink 700ms ease-in-out; }
+  .cat-fly { animation: bob 3s ease-in-out infinite; }
+  .dash-flow { stroke-dasharray: 3 5; animation: flow 1.6s linear infinite; }
+
+  /* cat animation variations */
+  .cat-sleep { animation: catSleep 4s ease-in-out; }
+  .cat-stretch { animation: catStretch 1.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .cat-paw-wave { animation: catPawWave 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+  .cat-head-tilt { animation: catHeadTilt 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+
+  /* ── Keyframes ── */
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .animate-marquee {
+    display: flex;
+    width: max-content;
+    animation: marquee 35s linear infinite;
+  }
+  .animate-marquee:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  @keyframes blink { 0%, 93%, 100% { transform: scaleY(1); } 96% { transform: scaleY(.08); } }
+  @keyframes tail { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(5deg); } }
+  @keyframes cape { 0%, 100% { transform: skewX(0deg); } 50% { transform: skewX(-1.5deg); } }
+  @keyframes hop { 0% { transform: translateY(0); } 40% { transform: translateY(-10px); } 100% { transform: translateY(0); } }
+  @keyframes wink { 0%, 100% { transform: scaleY(1); } 40%, 60% { transform: scaleY(.08); } }
+  @keyframes bob { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-8px) rotate(1.5deg); } }
+  @keyframes flow { to { stroke-dashoffset: -16; } }
+  @keyframes fadeInScale { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+  @keyframes dots { 0%, 80%, 100% { opacity: .25; } 40% { opacity: 1; } }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  @keyframes slideUp {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  @keyframes slideDown {
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(100%); opacity: 0; }
+  }
+  @keyframes catSleep {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    25% { transform: scale(1.02) rotate(-1deg); }
+    75% { transform: scale(0.98) rotate(1deg); }
+  }
+  @keyframes catStretch {
+    0% { transform: scaleX(1) scaleY(1); }
+    40% { transform: scaleX(1.12) scaleY(0.92); }
+    100% { transform: scaleX(1) scaleY(1); }
+  }
+  @keyframes catPawWave {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(20deg); }
+    50% { transform: rotate(-15deg); }
+    75% { transform: rotate(10deg); }
+  }
+  @keyframes catHeadTilt {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(-12deg); }
+  }
+
+  /* ── Reduced motion ── */
+  @media (prefers-reduced-motion: reduce) {
+    .rise, .cat-blink, .cat-tail, .cat-cape, .cat-hop, .cat-fly, .dash-flow,
+    .cat-sleep, .cat-stretch, .cat-paw-wave, .cat-head-tilt, .animate-marquee { animation: none !important; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .fade-slide-up { opacity: 1; transform: none; transition: none; }
+    .hover-lift, .hover-scale, .skill-card, .achievement-card, .footer-link,
+    .nav-pill { transition: none !important; }
+  }
+}
+
+  /* ── Scrollbar hiding ── */
+  .scrollbar-hide {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* ── Slide in animation ── */
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }

@@ -1,0 +1,10 @@
+{
+  "description": "An editorial portfolio showcasing independent developer Tushar Pawar’s projects, skills, and approach, helping clients and collaborators explore his work and connect.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
