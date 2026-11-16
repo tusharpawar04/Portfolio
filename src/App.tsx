@@ -38,6 +38,14 @@ function WorkCard({ p, index }: { p: Project; index: number }) {
   const V = visuals[p.slug as keyof typeof visuals]
   const { ref, isVisible } = useScrollReveal(0.1)
 
+  // Debug: Log image availability
+  console.log(`Project ${p.slug}:`, {
+    hasImages: !!p.images && p.images.length > 0,
+    imageCount: p.images?.length || 0,
+    firstImageUrl: p.images?.[0]?.url,
+    hasVisual: !!V
+  });
+
   return (
     <div
       ref={ref}
@@ -58,6 +66,13 @@ function WorkCard({ p, index }: { p: Project; index: number }) {
                 alt={p.title}
                 loading="lazy"
                 className="w-full h-full object-cover object-top"
+                onError={(e) => {
+                  console.error(`Failed to load image for ${p.title}:`, p.images?.[0]?.url);
+                  (e.target as HTMLImageElement).style.display = 'none';
+                }}
+                onLoad={() => {
+                  console.log(`Successfully loaded image for ${p.title}:`, p.images?.[0]?.url);
+                }}
               />
             ) : V ? (
               <V />
