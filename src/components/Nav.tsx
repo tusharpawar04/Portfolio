@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { NAV_ITEMS, about } from '../data'
+import { NAV_ITEMS, about, RESUME_FILENAME } from '../data'
+import { openResumePreview } from './ResumeModal'
 
 function useCurrentHash() {
   const get = () => window.location.hash.replace(/^#\/?/, '')
@@ -107,22 +108,22 @@ export default function Nav() {
         <div className="hidden md:flex items-center gap-4">
           <span className="meta text-mute whitespace-nowrap">India, {time}</span>
           
-          {/* Resume button with smooth appearance */}
-          <a
-            href={about.resumeUrl}
-            download
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cobalt/30 bg-cobalt/10 hover:bg-cobalt hover:border-cobalt text-cobalt hover:text-white font-mono text-xs font-medium transition-all duration-300 hover:scale-105 active:scale-95 whitespace-nowrap"
+          {/* Resume button with preview modal */}
+          <button
+            onClick={() => openResumePreview()}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cobalt/30 bg-cobalt/10 hover:bg-cobalt hover:border-cobalt text-cobalt hover:text-white font-mono text-xs font-medium transition-all duration-300 hover:scale-105 active:scale-95 whitespace-nowrap cursor-pointer"
             style={{
               opacity: showResume ? 1 : 0,
               transform: showResume ? 'translateY(0)' : 'translateY(-10px)',
               pointerEvents: showResume ? 'auto' : 'none',
               transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
             }}
-            aria-label="Download resume PDF"
+            aria-label="Preview resume"
+            title="Preview & Download Resume"
           >
             <span aria-hidden>📄</span>
             Resume
-          </a>
+          </button>
         </div>
 
         {/* Mobile hamburger - Improved design */}
@@ -172,16 +173,14 @@ export default function Nav() {
               ))}
             </nav>
             
-            {/* Resume download button */}
-            <a
-              href={about.resumeUrl}
-              download
-              onClick={() => setMenu(false)}
-              className="mt-6 inline-flex items-center gap-2 px-5 py-3 rounded-full bg-cobalt text-white font-mono text-sm hover:bg-cobalt/90 transition-all hover:scale-105 active:scale-95 shadow-md"
+            {/* Resume preview button */}
+            <button
+              onClick={() => { setMenu(false); openResumePreview() }}
+              className="mt-6 inline-flex items-center gap-2 px-5 py-3 rounded-full bg-cobalt text-white font-mono text-sm hover:bg-cobalt/90 transition-all hover:scale-105 active:scale-95 shadow-md cursor-pointer"
             >
               <span aria-hidden>📄</span>
-              Download Resume
-            </a>
+              View Resume
+            </button>
           </div>
         </>
       )}

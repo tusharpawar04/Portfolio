@@ -3,6 +3,7 @@ import { projects, EMAIL, WHATSAPP_URL, getGmailComposeUrl, getMailtoUrl, type P
 import Supercat from './components/Supercat'
 import AskSupercat from './components/AskSupercat'
 import ContactModal from './components/ContactModal'
+import ResumeModal from './components/ResumeModal'
 import ProjectSlider from './components/ProjectSlider'
 import { visuals } from './components/Visuals'
 import { useMagnetic, useParallax, useReveal, useScrollReveal } from './hooks'
@@ -880,6 +881,7 @@ export default function App() {
       {isAbout ? <AboutPage /> : slug ? <Case slug={slug} /> : <Home />}
       <AskSupercat />
       <ContactModal />
+      <ResumeModal />
     </ErrorBoundary>
   )
 }

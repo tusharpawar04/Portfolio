@@ -813,11 +813,13 @@ export const qa: QA[] = [
   },
 ]
 
-/* ── About ── */
+/* ── About & Resume ── */
+export const RESUME_FILENAME = 'Tushar_Pawar_Resume.pdf'
+
 export const about = {
   tagline: 'Developer who builds products people actually use',
   description: 'I\'m an independent developer from India who likes products that work in the real world, and ideas that are still a little too curious to ship.',
-  resumeUrl: '/Resume_Type 1.pdf',
+  resumeUrl: '/Tushar_Pawar_Resume.pdf',
 }
 
 /* ── Brief highlights (no personal details — just notable work) ── */

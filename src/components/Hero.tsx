@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import Supercat from './Supercat'
 import { about } from '../data'
 import { useSmoothParallax } from '../hooks'
+import { openResumePreview } from './ResumeModal'
 
 export default function Hero() {
   const [loaded, setLoaded] = useState(false)
@@ -106,14 +107,13 @@ export default function Hero() {
                 <span aria-hidden>→</span>
               </a>
               
-              {/* Creative Resume Download */}
-              <a
-                href={about.resumeUrl}
-                download
+              {/* Creative Resume Preview */}
+              <button
+                onClick={() => openResumePreview()}
                 onMouseEnter={() => setResumeHover(true)}
                 onMouseLeave={() => setResumeHover(false)}
-                className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-cobalt/20 bg-white/80 backdrop-blur-sm hover:bg-white hover:border-cobalt/40 transition-all duration-300 hover:scale-105 active:scale-95 shadow-md hover:shadow-lg"
-                aria-label="Download resume PDF"
+                className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-cobalt/20 bg-white/80 backdrop-blur-sm hover:bg-white hover:border-cobalt/40 transition-all duration-300 hover:scale-105 active:scale-95 shadow-md hover:shadow-lg cursor-pointer"
+                aria-label="Preview resume"
               >
                 <span className="text-lg" aria-hidden>📄</span>
                 <span className="font-medium text-ink">Resume</span>
@@ -121,10 +121,10 @@ export default function Hero() {
                   <span className="absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs bg-ink text-white px-3 py-1.5 rounded-lg shadow-lg"
                     style={{ animation: 'fadeInScale 200ms cubic-bezier(.16,1,.3,1) both' }}
                   >
-                    Download PDF 🐱
+                    Preview & Download 🐱
                   </span>
                 )}
-              </a>
+              </button>
             </div>
 
             {/* Floating info cards */}

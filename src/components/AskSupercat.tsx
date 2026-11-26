@@ -2,13 +2,14 @@ import { useEffect, useRef, useState, type FormEvent } from 'react'
 import Supercat from './Supercat'
 import { qa, EMAIL, WHATSAPP_NUMBER, WHATSAPP_URL, getGmailComposeUrl } from '../data'
 import { prefersReduced } from '../hooks'
+import { openResumePreview } from './ResumeModal'
 
 export const openAsk = () => window.dispatchEvent(new Event('ask-supercat'))
 
 type ChatMessage = {
   role: 'user' | 'assistant'
   content: string
-  actionLink?: { label: string; href: string; isMail?: boolean; isWhatsApp?: boolean }
+  actionLink?: { label: string; href: string; isMail?: boolean; isWhatsApp?: boolean; isResume?: boolean }
 }
 
 export default function AskSupercat() {
@@ -109,6 +110,16 @@ export default function AskSupercat() {
         role: 'assistant',
         content: `You can reach Tushar directly on WhatsApp at ${WHATSAPP_NUMBER}, or via email at ${EMAIL}. Click below to launch a chat directly!`,
         actionLink: { label: `Chat on WhatsApp (${WHATSAPP_NUMBER}) 💬`, href: WHATSAPP_URL, isWhatsApp: true },
+      }
+    }
+
+    // Resume / CV
+    if (q.includes('resume') || q.includes('cv')) {
+      return {
+        role: 'assistant',
+        content:
+          "You can preview and download Tushar's resume (Tushar_Pawar_Resume.pdf) with our interactive viewer right here!",
+        actionLink: { label: 'Open Resume Preview 📄', href: '#resume', isResume: true },
       }
     }
 
@@ -396,6 +407,17 @@ export default function AskSupercat() {
                         >
                           {msg.actionLink.label}
                         </a>
+                      ) : msg.actionLink.isResume ? (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setOpen(false)
+                            openResumePreview()
+                          }}
+                          className="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-white bg-cobalt hover:bg-cobalt/90 px-3 py-1.5 rounded-full transition-colors cursor-pointer shadow-xs"
+                        >
+                          {msg.actionLink.label}
+                        </button>
                       ) : (
                         <a
                           href={msg.actionLink.href}
