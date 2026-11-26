@@ -1,2 +1,3 @@
-# AgentPlat packages this default favicon directly from source without LFS hydration.
+# Package static favicon and resume PDFs directly from source without Git LFS pointers (required for Vercel builds).
 favicon.png -filter -diff -merge -text
+*.pdf -filter -diff -merge -text
