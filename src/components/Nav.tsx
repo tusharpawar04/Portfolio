@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { NAV_ITEMS, about, RESUME_FILENAME } from '../data'
 import { openResumePreview } from './ResumeModal'
 
+const isMobile = () => typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches
+
 function useCurrentHash() {
   const get = () => window.location.hash.replace(/^#\/?/, '')
   const [hash, setHash] = useState(get)
@@ -108,9 +110,18 @@ export default function Nav() {
         <div className="hidden md:flex items-center gap-4">
           <span className="meta text-mute whitespace-nowrap">India, {time}</span>
           
-          {/* Resume button with preview modal */}
-          <button
-            onClick={() => openResumePreview()}
+          {/* Resume button with preview modal on desktop, direct download/open on phone */}
+          <a
+            href={about.resumeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            download={RESUME_FILENAME}
+            onClick={(e) => {
+              if (!isMobile()) {
+                e.preventDefault()
+                openResumePreview()
+              }
+            }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cobalt/30 bg-cobalt/10 hover:bg-cobalt hover:border-cobalt text-cobalt hover:text-white font-mono text-xs font-medium transition-all duration-300 hover:scale-105 active:scale-95 whitespace-nowrap cursor-pointer"
             style={{
               opacity: showResume ? 1 : 0,
@@ -118,12 +129,12 @@ export default function Nav() {
               pointerEvents: showResume ? 'auto' : 'none',
               transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
             }}
-            aria-label="Preview resume"
+            aria-label="Resume"
             title="Preview & Download Resume"
           >
             <span aria-hidden>📄</span>
             Resume
-          </button>
+          </a>
         </div>
 
         {/* Mobile hamburger - Improved design */}
@@ -173,14 +184,24 @@ export default function Nav() {
               ))}
             </nav>
             
-            {/* Resume preview button */}
-            <button
-              onClick={() => { setMenu(false); openResumePreview() }}
+            {/* Resume button — directly opens/downloads in mobile browser */}
+            <a
+              href={about.resumeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              download={RESUME_FILENAME}
+              onClick={(e) => {
+                setMenu(false)
+                if (!isMobile()) {
+                  e.preventDefault()
+                  openResumePreview()
+                }
+              }}
               className="mt-6 inline-flex items-center gap-2 px-5 py-3 rounded-full bg-cobalt text-white font-mono text-sm hover:bg-cobalt/90 transition-all hover:scale-105 active:scale-95 shadow-md cursor-pointer"
             >
               <span aria-hidden>📄</span>
-              View Resume
-            </button>
+              Download Resume
+            </a>
           </div>
         </>
       )}

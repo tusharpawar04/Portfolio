@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Supercat from './Supercat'
-import { about } from '../data'
+import type { Mood } from './Supercat'
+import { about, RESUME_FILENAME } from '../data'
 import { useSmoothParallax } from '../hooks'
 import { openResumePreview } from './ResumeModal'
 
@@ -8,7 +9,15 @@ export default function Hero() {
   const [loaded, setLoaded] = useState(false)
   const [resumeHover, setResumeHover] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [mobileCatMood, setMobileCatMood] = useState<Mood>('smile')
+  const [mobileHop, setMobileHop] = useState(false)
   const heroRef = useRef<HTMLElement>(null)
+
+  const handleMobileCatTap = () => {
+    setMobileHop(true)
+    setMobileCatMood((m) => (m === 'smile' ? 'open' : m === 'open' ? 'wink' : m === 'wink' ? 'curious' : 'smile'))
+    setTimeout(() => setMobileHop(false), 550)
+  }
 
   // Silky smooth, hardware-accelerated inertia parallax
   useSmoothParallax(heroRef)
@@ -30,7 +39,7 @@ export default function Hero() {
   })
 
   return (
-    <section ref={heroRef} className="relative overflow-hidden bg-cloud" style={{ height: '100vh', maxHeight: '100vh' }}>
+    <section ref={heroRef} className="relative overflow-hidden bg-cloud min-h-[100svh] lg:h-screen lg:max-h-screen flex items-center pt-20 pb-14 lg:py-0">
       {/* Background decorations - with hardware-accelerated inertia parallax */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
         {/* Large animated gradient blob */}
@@ -74,20 +83,70 @@ export default function Hero() {
       </div>
 
       {/* Main content grid */}
-      <div className="relative h-full flex items-center px-6 md:px-12 lg:px-16">
-        <div className="max-w-[1440px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          
+      <div className="relative w-full flex items-center px-6 md:px-12 lg:px-16">
+        <div className="max-w-[1440px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+
+          {/* Mobile Supercat Animated Stage (Phone / Tablet only) */}
+          <div className="flex lg:hidden items-center justify-center relative py-2" style={entrance(0.05)}>
+            <div className="relative w-44 h-44 flex items-center justify-center">
+              {/* Rotating dashed orbital ring */}
+              <div
+                className="absolute inset-0 rounded-full border border-dashed border-cobalt/25"
+                style={{ animation: 'rotate 18s linear infinite' }}
+              >
+                <span className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-cobalt/60 shadow-xs" />
+                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-2.5 h-2.5 rounded-full bg-apricot/80 shadow-xs" />
+              </div>
+
+              {/* Inner pulsing glow */}
+              <div
+                className="absolute inset-4 rounded-full bg-gradient-to-br from-cobalt/12 via-transparent to-apricot/15 blur-sm"
+                style={{ animation: 'pulse 4s ease-in-out infinite' }}
+              />
+
+              {/* Orbiting mini skill pills */}
+              <span
+                className="absolute -left-5 top-4 px-2.5 py-1 rounded-full bg-white/95 border border-cobalt/20 shadow-sm text-[10px] font-mono text-cobalt z-20"
+                style={{ animation: 'float 3.2s ease-in-out infinite' }}
+              >
+                React
+              </span>
+              <span
+                className="absolute -right-6 bottom-6 px-2.5 py-1 rounded-full bg-white/95 border border-cobalt/20 shadow-sm text-[10px] font-mono text-cobalt z-20"
+                style={{ animation: 'float 3.6s ease-in-out infinite 0.6s' }}
+              >
+                AI / ML
+              </span>
+
+              {/* Interactive floating Supercat */}
+              <button
+                type="button"
+                onClick={handleMobileCatTap}
+                className={`relative z-10 cursor-pointer focus:outline-none active:scale-95 transition-transform ${mobileHop ? 'cat-hop' : 'cat-fly'}`}
+                aria-label="Tap Supercat"
+              >
+                <Supercat
+                  pose="fly"
+                  mood={mobileCatMood}
+                  enableRotation
+                  className="w-32 h-32 drop-shadow-xl"
+                  title="Supercat — tap me!"
+                />
+              </button>
+            </div>
+          </div>
+
           {/* Left: Text content */}
           <div className="lg:col-span-6 z-10">
             <h1
-              className="font-serif text-[clamp(2.8rem,9vw,6.5rem)] leading-[1.05] tracking-[-0.03em]"
+              className="font-serif text-[clamp(2.5rem,9vw,6.5rem)] leading-[1.05] tracking-[-0.03em]"
               style={entrance(0)}
             >
               I build <em className="text-cobalt">thoughtful</em><br />digital products.
             </h1>
 
             <p
-              className="mt-6 text-[18px] md:text-[20px] leading-[1.7] text-ink/70 max-w-[34rem]"
+              className="mt-4 lg:mt-6 text-[16px] md:text-[20px] leading-[1.65] text-ink/70 max-w-[34rem]"
               style={entrance(0.15)}
             >
               Full-stack apps, AI-powered experiences, and ideas
@@ -95,7 +154,7 @@ export default function Hero() {
             </p>
 
             <div 
-              className="mt-8 flex flex-wrap items-center gap-4"
+              className="mt-6 lg:mt-8 flex flex-wrap items-center gap-3.5"
               style={entrance(0.3)}
             >
               <a
@@ -107,29 +166,38 @@ export default function Hero() {
                 <span aria-hidden>→</span>
               </a>
               
-              {/* Creative Resume Preview */}
-              <button
-                onClick={() => openResumePreview()}
+              {/* Resume: direct download/open in phone view, Mac-style preview modal on desktop */}
+              <a
+                href={about.resumeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                download={RESUME_FILENAME}
+                onClick={(e) => {
+                  if (!window.matchMedia('(max-width: 767px)').matches) {
+                    e.preventDefault()
+                    openResumePreview()
+                  }
+                }}
                 onMouseEnter={() => setResumeHover(true)}
                 onMouseLeave={() => setResumeHover(false)}
                 className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-cobalt/20 bg-white/80 backdrop-blur-sm hover:bg-white hover:border-cobalt/40 transition-all duration-300 hover:scale-105 active:scale-95 shadow-md hover:shadow-lg cursor-pointer"
-                aria-label="Preview resume"
+                aria-label="Resume"
               >
                 <span className="text-lg" aria-hidden>📄</span>
                 <span className="font-medium text-ink">Resume</span>
                 {resumeHover && (
-                  <span className="absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs bg-ink text-white px-3 py-1.5 rounded-lg shadow-lg"
+                  <span className="hidden md:block absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs bg-ink text-white px-3 py-1.5 rounded-lg shadow-lg"
                     style={{ animation: 'fadeInScale 200ms cubic-bezier(.16,1,.3,1) both' }}
                   >
                     Preview & Download 🐱
                   </span>
                 )}
-              </button>
+              </a>
             </div>
 
             {/* Floating info cards */}
             <div 
-              className="mt-12 flex flex-wrap gap-3"
+              className="mt-8 lg:mt-12 flex flex-wrap gap-3"
               style={entrance(0.45)}
             >
               <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/60 backdrop-blur-sm border border-rule shadow-sm">
@@ -216,9 +284,9 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Scroll indicator (desktop) */}
       <div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 transition-opacity duration-300 pointer-events-none"
+        className="hidden lg:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-2 transition-opacity duration-300 pointer-events-none"
         style={{ ...entrance(0.6), opacity: loaded && !scrolled ? 0.6 : 0 }}
       >
         <span className="text-xs text-ink/40 font-mono mb-1">Scroll</span>
