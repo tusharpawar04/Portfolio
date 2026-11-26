@@ -217,13 +217,35 @@ export default function ResumeModal() {
               padding: '24px 16px 48px',
             }}
           >
-            <iframe
-              src={`${about.resumeUrl}#toolbar=0&navpanes=0&view=FitH`}
-              title="Tushar Pawar Resume"
+            <object
+              data={`${about.resumeUrl}#toolbar=0&navpanes=0&view=FitH`}
+              type="application/pdf"
               className="w-full rounded-2xl border border-rule/50 shadow-lg bg-white"
               style={{ height: '1200px', minHeight: '80vh' }}
-              loading="lazy"
-            />
+            >
+              <div className="flex flex-col items-center justify-center h-full gap-4 text-center p-8">
+                <div className="text-6xl">📄</div>
+                <p className="text-ink/70 font-serif text-lg">Unable to display PDF preview</p>
+                <p className="text-ink/50 text-sm max-w-md">Your browser doesn't support embedded PDFs. Please download the resume or open it in a new tab.</p>
+                <div className="flex gap-3 mt-4">
+                  <a
+                    href={about.resumeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white border border-rule hover:border-cobalt text-ink hover:text-cobalt transition-all"
+                  >
+                    Open in New Tab ↗
+                  </a>
+                  <a
+                    href={about.resumeUrl}
+                    download="Tushar_Pawar_Resume.pdf"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-cobalt hover:bg-cobalt/90 text-white transition-all"
+                  >
+                    Download PDF
+                  </a>
+                </div>
+              </div>
+            </object>
           </div>
         </div>
       </div>
